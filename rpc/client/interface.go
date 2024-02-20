@@ -80,6 +80,8 @@ type SignClient interface {
 		end uint64,
 	) (*ctypes.ResultDataRootInclusionProof, error)
 
+	NamespaceSummary(ctx context.Context, height int64) (*ctypes.ResultNamespaceSummary, error)
+
 	Validators(ctx context.Context, height *int64, page, perPage *int) (*ctypes.ResultValidators, error)
 	Tx(ctx context.Context, hash []byte, prove bool) (*ctypes.ResultTx, error)
 
