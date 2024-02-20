@@ -193,6 +193,13 @@ func (c *Local) DataCommitment(
 	return core.DataCommitment(c.ctx, start, end)
 }
 
+func (c *Local) NamespaceSummary(
+	_ context.Context,
+	height int64,
+) (*ctypes.ResultNamespaceSummary, error) {
+	return core.NamespaceSummary(c.ctx, height)
+}
+
 func (c *Local) DataRootInclusionProof(
 	_ context.Context,
 	height uint64,

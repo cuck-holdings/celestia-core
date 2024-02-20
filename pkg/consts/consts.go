@@ -14,6 +14,8 @@ const (
 	// shares to data root inclusion proofs via the ABCI query method.
 	ShareInclusionProofQueryPath = "custom/shareInclusionProof/%d/%d"
 
+	NamespaceSummaryQueryPath = "custom/namespaceSummary/%d"
+
 	// ProtoBlobTxTypeID is included in each encoded BlobTx to help prevent
 	// decoding binaries that are not actually BlobTxs.
 	ProtoBlobTxTypeID = "BLOB"

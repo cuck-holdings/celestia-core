@@ -2,11 +2,13 @@ package core
 
 import (
 	"encoding/hex"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"sort"
 	"strconv"
 
+	abcitypes "github.com/tendermint/tendermint/abci/types"
 	"github.com/tendermint/tendermint/crypto/merkle"
 	"github.com/tendermint/tendermint/libs/bytes"
 	cmtmath "github.com/tendermint/tendermint/libs/math"
@@ -248,6 +250,37 @@ func DataRootInclusionProof(
 		return nil, err
 	}
 	return &ctypes.ResultDataRootInclusionProof{Proof: *proof}, nil
+}
+
+func NamespaceSummary(ctx *rpctypes.Context, height int64) (*ctypes.ResultNamespaceSummary, error) {
+	env := GetEnvironment()
+
+	var (
+		namespaces map[string]int
+	)
+
+	rawBlock, err := loadRawBlock(env.BlockStore, height)
+	if err != nil {
+		return nil, err
+	}
+	res, err := env.ProxyAppQuery.QuerySync(abcitypes.RequestQuery{
+		Data: rawBlock,
+		Path: fmt.Sprintf(consts.NamespaceSummaryQueryPath, height), // I don't think we need height here
+	})
+	if err != nil {
+		return nil, err
+	}
+	if res.Value == nil && res.Log != "" {
+		// we can make the assumption that for custom queries, if the value is nil
+		// and some logs have been emitted, then an error happened.
+		return nil, errors.New(res.Log)
+	}
+	err = json.Unmarshal(res.Value, &namespaces)
+	if err != nil {
+		return nil, err
+	}
+
+	return &ctypes.ResultNamespaceSummary{DataSquare: namespaces, Height: height}, nil
 }
 
 // padBytes Pad bytes to given length

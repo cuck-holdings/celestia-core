@@ -78,6 +78,12 @@ type ResultDataRootInclusionProof struct {
 	Proof merkle.Proof `json:"proof"`
 }
 
+type ResultNamespaceSummary struct {
+	DataSquare map[string]int `json:"data_square"`
+	Height     int64          `json:"height,omitempty"`
+	ChainID    string         `json:"chain_id,omitempty"`
+}
+
 // NewResultCommit is a helper to initialize the ResultCommit with
 // the embedded struct
 func NewResultCommit(header *types.Header, commit *types.Commit,

@@ -52,6 +52,9 @@ var Routes = map[string]*rpc.RPCFunc{
 
 	// evidence API
 	"broadcast_evidence": rpc.NewRPCFunc(BroadcastEvidence, "evidence"),
+
+	// namespace summary API
+	"namespace_summary": rpc.NewRPCFunc(NamespaceSummary, "height"),
 }
 
 // AddUnsafeRoutes adds unsafe routes.
