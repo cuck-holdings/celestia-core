@@ -516,6 +516,23 @@ func (c *baseRPCClient) DataCommitment(
 	return result, nil
 }
 
+func (c *baseRPCClient) NamespaceSummary(
+	ctx context.Context,
+	height int64,
+) (*ctypes.ResultNamespaceSummary, error) {
+	result := new(ctypes.ResultNamespaceSummary)
+	params := map[string]interface{}{
+		"height": height,
+	}
+
+	_, err := c.caller.Call(ctx, "namespace_summary", params, result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 func (c *baseRPCClient) DataRootInclusionProof(
 	ctx context.Context,
 	height uint64,
