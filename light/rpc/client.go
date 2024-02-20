@@ -555,6 +555,13 @@ func (c *Client) DataRootInclusionProof(
 	return c.next.DataRootInclusionProof(ctx, height, start, end)
 }
 
+func (c *Client) NamespaceSummary(
+	ctx context.Context,
+	height int64,
+) (*ctypes.ResultNamespaceSummary, error) {
+	return c.next.NamespaceSummary(ctx, height)
+}
+
 // Tx calls rpcclient#Tx method and then verifies the proof if such was
 // requested.
 func (c *Client) Tx(ctx context.Context, hash []byte, prove bool) (*ctypes.ResultTx, error) {
